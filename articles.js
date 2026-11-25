@@ -11,6 +11,6 @@ const articles = [
   { separator: true },
   { name: 'Bier 0,33', price: 3.00, pfand: 1.00 },
   { separator: true },
-  { name: 'Kinderpunsch', price: 4.50, pfand: 2.00 },
+  { name: 'Kinderpunsch', price: 3.00, pfand: 2.00 },
   { name: 'Limo/Spezi/Wasser', price: 2.50, pfand: 1.00 }
 ];
