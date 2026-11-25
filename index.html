@@ -54,11 +54,26 @@
       align-items: center;
       justify-content: center;
     }
-    #newOrder:active, #calcLink:active { opacity: .6; }
+    #settingsBtn {
+      flex: 0 0 auto;
+      aspect-ratio: 1 / 1;
+      align-self: stretch;
+      font-size: 24px;
+      border: 0;
+      border-radius: 12px;
+      background: #555;
+      color: #fff;
+      padding: 0;
+    }
+    #newOrder:active, #calcLink:active, #settingsBtn:active { opacity: .6; }
 
-    /* Spaltenkopf Pfand */
+    /* Spaltenköpfe */
     .head { display: flex; gap: 20px; padding: 0 20px; margin-bottom: 4px; }
     .head .sp { flex: 1; }
+    .head .pr {
+      width: 238px; text-align: left;
+      font-size: 18px; color: #ccc; font-weight: bold;
+    }
     .head .pf {
       width: 250px; padding-left: 20px;
       font-size: 18px; color: #f0b24a; font-weight: bold;
@@ -122,11 +137,12 @@
   <div id="rotate">Bitte das iPad quer halten ↻</div>
   <section id="order">
     <div class="top">
+      <button id="settingsBtn" type="button" title="Einstellungen" aria-label="Einstellungen">⚙️</button>
       <button id="newOrder">Neue Bestellung</button>
       <a id="calcLink" href="fw_rechenhilfe.html">Rechenhilfe</a>
     </div>
     <h2>Bestellung</h2>
-    <div class="head"><div class="sp"></div><div class="pf">Pfand</div></div>
+    <div class="head"><div class="sp"></div><div class="pr">Preis</div><div class="pf">Pfand</div></div>
     <div id="items"></div>
   </section>
 
@@ -139,9 +155,12 @@
     <div id="total"><span>SUMME</span><span id="sum">0,00 €</span></div>
   </aside>
 
-  <script src="articles.js"></script>
-  <script src="shared.js"></script>
+  <script src="./articles.js"></script>
+  <script src="./store.js"></script>
+  <script src="./shared.js"></script>
   <script>
+    document.getElementById('settingsBtn').addEventListener('click', FWStore.openAdmin);
+
     const qty = loadArr('fwQty');   // Artikelanzahl
     const dep = loadArr('fwDep');   // Pfandanzahl
 
@@ -223,11 +242,12 @@
     });
 
     lockGestures('#order, #lines');
+    keepAwake();
   </script>
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js');
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       });
     }
   </script>

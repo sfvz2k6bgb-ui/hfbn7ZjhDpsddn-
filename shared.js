@@ -109,3 +109,27 @@ function lockGestures(scrollSelector) {
     if (!e.target.closest(scrollSelector)) e.preventDefault();
   }, { passive: false });
 }
+
+// Bildschirm aktiv halten (Screen Wake Lock API)
+let wakeLock = null;
+
+async function requestWakeLock() {
+  if (!('wakeLock' in navigator) || document.visibilityState !== 'visible') return;
+  if (wakeLock) return;
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release', () => { wakeLock = null; });
+  } catch (e) {
+    wakeLock = null;
+  }
+}
+
+function keepAwake() {
+  requestWakeLock();
+  // Beim Zurückkehren in die App erneut anfordern
+  document.addEventListener('visibilitychange', requestWakeLock);
+  // Nach der ersten Berührung erneut versuchen (Nutzeraktion erforderlich)
+  ['touchend', 'click'].forEach(ev =>
+    document.addEventListener(ev, requestWakeLock, { passive: true })
+  );
+}

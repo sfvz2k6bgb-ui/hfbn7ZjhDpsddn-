@@ -93,6 +93,7 @@
   </aside>
 
   <script src="articles.js"></script>
+  <script src="store.js"></script>
   <script src="shared.js"></script>
   <script>
     let input = ''; // Eingabe als Text, z. B. "20,5"
@@ -187,6 +188,7 @@
     update();
 
     lockGestures('#lines');
+    keepAwake();
   </script>
   <script>
     if ('serviceWorker' in navigator) {

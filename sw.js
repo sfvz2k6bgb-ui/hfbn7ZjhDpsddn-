@@ -1,9 +1,12 @@
-const CACHE = 'fw-kasse-v6';
+const CACHE = 'fw-kasse-v13';
 const FALLBACK = './index.html';
 const ASSETS = [
   './',
   './index.html',
   './fw_rechenhilfe.html',
+  './admin.html',
+  './admin.js',
+  './store.js',
   './style.css',
   './articles.js',
   './shared.js',
